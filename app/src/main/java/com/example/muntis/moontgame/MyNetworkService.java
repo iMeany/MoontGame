@@ -23,12 +23,14 @@ public class MyNetworkService extends Service {
     // Random number generator
     private final Random mGenerator = new Random();
 
+    public static String sendMsg;
 
     public static BufferedReader inStream;
     public static PrintWriter outStream;
     public static Socket myClientSocket;
     public static ServerSocket myServerSocket;
 
+    Runnable connectWrite=null;
     public String serverAdr;
     public String nickname;
     public Integer serverPrt;
@@ -94,6 +96,7 @@ public class MyNetworkService extends Service {
 
                 boolean nickRetry = false;
                 String line = "";
+                String move = "";
 
                 while(true) {
                     // process messages received from server
@@ -113,6 +116,13 @@ public class MyNetworkService extends Service {
                     } else if (line.startsWith("NAMEACCEPTED|"+nickname)) {
                         EventBus.getDefault().post(new ServerMessageEvent("ACCEPTED_WAIT", parentActiv));
 
+
+                    // when move from other player is rec
+                    } else if (line.startsWith("BOARD|")) {
+                        move = line.substring(6);
+
+                        EventBus.getDefault().post((new ServerMessageGameMoveEvent(move, parentActiv)));
+
                     // game on server started, go to game
                     } else if (line.matches("GAMESTARTED|.*?|"+nickname) || line.matches("GAMESTARTED|"+nickname+"|.*?") ) {
 
@@ -131,13 +141,14 @@ public class MyNetworkService extends Service {
                         // go to game activity
                         EventBus.getDefault().post((new ActivityChangeEvent(otherNick)));
 
+
                     // text message recieved from other player
                     } else if (line.startsWith("MESSAGE")) {
                         // @todo implement game chat here if needed
 
                     // random stuff from server for debug
                     } else {
-                        EventBus.getDefault().post((new ServerMessageEvent(line, parentActiv)));
+                        //EventBus.getDefault().post((new ServerMessageEvent(line, parentActiv)));
                     }
                 }
 
@@ -152,7 +163,23 @@ public class MyNetworkService extends Service {
 
     // sends message using set connection
     public Void sendMessage(String msg) {
-        outStream.println(msg);
+
+        // start parallel network stream writing thread
+        Runnable connectWrite = new connectSocketWrite();
+        sendMsg = msg; // @todo ??????
+        new Thread(connectWrite).start();
         return null;
     }
+
+    class connectSocketWrite implements Runnable {
+        @Override
+        public void run() {
+            try {
+                outStream.println(sendMsg);
+            }catch (UnknownError e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

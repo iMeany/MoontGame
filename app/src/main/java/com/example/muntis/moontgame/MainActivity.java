@@ -40,7 +40,9 @@ public class MainActivity extends Activity {
         EventBus.getDefault().register(this);
         // Bind to LocalService
         Intent intent = new Intent(this, MyNetworkService.class);
+        //startService(intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
 
 
     }
@@ -96,7 +98,7 @@ public class MainActivity extends Activity {
 
     // this is called when recieves message from server
     public void onEvent(final ServerMessageEvent event) {
-        Runnable doDisplayError = new Runnable() {
+        Runnable displayResponse = new Runnable() {
             public void run() {
                 TextView serverResponse = (TextView) event.activ.findViewById(R.id.response);
                 if (event.message.equals("CHANGE_NICK")) {
@@ -108,17 +110,16 @@ public class MainActivity extends Activity {
                 }
             }
         };
-        messageHandler.post(doDisplayError);
+        messageHandler.post(displayResponse);
     }
 
     public void onEvent(final ActivityChangeEvent activEvent) {
 
         Intent intent = new Intent(this, GameActivity.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+//        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         EditText nick = (EditText) findViewById(R.id.nick);
         intent.putExtra("nick", nick.getText().toString());
-
         startActivity(intent);
 
     }
