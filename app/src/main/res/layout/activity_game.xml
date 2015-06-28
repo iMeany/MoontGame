@@ -7,11 +7,15 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:orientation="vertical"
-    tools:context="com.example.muntis.moontgame.GameActivity">
+    tools:context="com.example.muntis.moontgame.GameActivity"
+    android:transitionGroup="false">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView
+        android:text="@string/nick_vs_nick"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topText" />
+        android:id="@+id/topText"
+        />
 
 
     <LinearLayout
@@ -24,6 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a1"
+            android:tag="a1"
             android:onClick="onClick"
             />
         <Button
@@ -32,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a2"
+            android:tag="a2"
             android:onClick="onClick"
             />
         <Button
@@ -40,6 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a3"
+            android:tag="a3"
             android:onClick="onClick"
             />
         <Button
@@ -48,6 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a4"
+            android:tag="a4"
             android:onClick="onClick"
             />
         <Button
@@ -56,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a5"
+            android:tag="a5"
             android:onClick="onClick"
             />
         <Button
@@ -64,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a6"
+            android:tag="a6"
             android:onClick="onClick"
             />
         <Button
@@ -72,6 +82,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a7"
+            android:tag="a7"
             android:onClick="onClick"
             />
         <Button
@@ -80,6 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="a8"
+            android:tag="a8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -93,6 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b1"
+            android:tag="b1"
             android:onClick="onClick"
             />
         <Button
@@ -101,6 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b2"
+            android:tag="b2"
             android:onClick="onClick"
             />
         <Button
@@ -109,6 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b3"
+            android:tag="b3"
             android:onClick="onClick"
             />
         <Button
@@ -117,6 +132,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b4"
+            android:tag="b4"
             android:onClick="onClick"
             />
         <Button
@@ -125,6 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b5"
+            android:tag="b5"
             android:onClick="onClick"
             />
         <Button
@@ -133,6 +150,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b6"
+            android:tag="b6"
             android:onClick="onClick"
             />
         <Button
@@ -141,6 +159,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b7"
+            android:tag="b7"
             android:onClick="onClick"
             />
         <Button
@@ -149,6 +168,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="b8"
+            android:tag="b8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -163,6 +183,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c1"
+            android:tag="c1"
             android:onClick="onClick"
             />
         <Button
@@ -171,6 +192,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c2"
+            android:tag="c2"
             android:onClick="onClick"
             />
         <Button
@@ -179,6 +201,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c3"
+            android:tag="c3"
             android:onClick="onClick"
             />
         <Button
@@ -187,6 +210,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c4"
+            android:tag="c4"
             android:onClick="onClick"
             />
         <Button
@@ -195,6 +219,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c5"
+            android:tag="c5"
             android:onClick="onClick"
             />
         <Button
@@ -203,6 +228,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c6"
+            android:tag="c6"
             android:onClick="onClick"
             />
         <Button
@@ -211,6 +237,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c7"
+            android:tag="c7"
             android:onClick="onClick"
             />
         <Button
@@ -219,6 +246,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="c8"
+            android:tag="c8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -232,6 +260,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d1"
+            android:tag="d1"
             android:onClick="onClick"
             />
         <Button
@@ -240,6 +269,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d2"
+            android:tag="d2"
             android:onClick="onClick"
             />
         <Button
@@ -248,6 +278,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d3"
+            android:tag="d3"
             android:onClick="onClick"
             />
         <Button
@@ -256,6 +287,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d4"
+            android:tag="d4"
             android:onClick="onClick"
             />
         <Button
@@ -264,6 +296,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d5"
+            android:tag="d5"
             android:onClick="onClick"
             />
         <Button
@@ -272,6 +305,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d6"
+            android:tag="d6"
             android:onClick="onClick"
             />
         <Button
@@ -280,6 +314,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d7"
+            android:tag="d7"
             android:onClick="onClick"
             />
         <Button
@@ -288,6 +323,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="d8"
+            android:tag="d8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -302,6 +338,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e1"
+            android:tag="e1"
             android:onClick="onClick"
             />
         <Button
@@ -310,6 +347,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e2"
+            android:tag="e2"
             android:onClick="onClick"
             />
         <Button
@@ -318,6 +356,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e3"
+            android:tag="e3"
             android:onClick="onClick"
             />
         <Button
@@ -326,6 +365,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e4"
+            android:tag="e4"
             android:onClick="onClick"
             />
         <Button
@@ -334,6 +374,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e5"
+            android:tag="e5"
             android:onClick="onClick"
             />
         <Button
@@ -342,6 +383,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e6"
+            android:tag="e6"
             android:onClick="onClick"
             />
         <Button
@@ -350,6 +392,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e7"
+            android:tag="e7"
             android:onClick="onClick"
             />
         <Button
@@ -358,6 +401,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="e8"
+            android:tag="e8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -372,6 +416,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f1"
+            android:tag="f1"
             android:onClick="onClick"
             />
         <Button
@@ -380,6 +425,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f2"
+            android:tag="f2"
             android:onClick="onClick"
             />
         <Button
@@ -388,6 +434,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f3"
+            android:tag="f3"
             android:onClick="onClick"
             />
         <Button
@@ -396,6 +443,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f4"
+            android:tag="f4"
             android:onClick="onClick"
             />
         <Button
@@ -404,6 +452,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f5"
+            android:tag="f5"
             android:onClick="onClick"
             />
         <Button
@@ -412,6 +461,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f6"
+            android:tag="f6"
             android:onClick="onClick"
             />
         <Button
@@ -420,6 +470,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f7"
+            android:tag="f7"
             android:onClick="onClick"
             />
         <Button
@@ -428,6 +479,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="f8"
+            android:tag="f8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -442,6 +494,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g1"
+            android:tag="g1"
             android:onClick="onClick"
             />
         <Button
@@ -450,6 +503,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g2"
+            android:tag="g2"
             android:onClick="onClick"
             />
         <Button
@@ -458,6 +512,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g3"
+            android:tag="g3"
             android:onClick="onClick"
             />
         <Button
@@ -466,6 +521,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g4"
+            android:tag="g4"
             android:onClick="onClick"
             />
         <Button
@@ -474,6 +530,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g5"
+            android:tag="g5"
             android:onClick="onClick"
             />
         <Button
@@ -482,6 +539,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g6"
+            android:tag="g6"
             android:onClick="onClick"
             />
         <Button
@@ -490,6 +548,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g7"
+            android:tag="g7"
             android:onClick="onClick"
             />
         <Button
@@ -498,6 +557,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="g8"
+            android:tag="g8"
             android:onClick="onClick"
             />
     </LinearLayout>
@@ -512,6 +572,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h1"
+            android:tag="h1"
             android:onClick="onClick"
             />
         <Button
@@ -520,6 +581,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h2"
+            android:tag="h2"
             android:onClick="onClick"
             />
         <Button
@@ -528,6 +590,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h3"
+            android:tag="h3"
             android:onClick="onClick"
             />
         <Button
@@ -536,6 +599,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h4"
+            android:tag="h4"
             android:onClick="onClick"
             />
         <Button
@@ -544,6 +608,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h5"
+            android:tag="h5"
             android:onClick="onClick"
             />
         <Button
@@ -552,6 +617,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h6"
+            android:tag="h6"
             android:onClick="onClick"
             />
         <Button
@@ -560,6 +626,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h7"
+            android:tag="h7"
             android:onClick="onClick"
             />
         <Button
@@ -568,6 +635,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:text="h8"
+            android:tag="h8"
             android:onClick="onClick"
             />
     </LinearLayout>

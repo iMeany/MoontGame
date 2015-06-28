@@ -8,10 +8,12 @@ import android.app.Activity;
  */
 public class ServerMessageGameMoveEvent {
     public final String board;
+    public final String ownsFields;
     public final Activity activ;
 
-    public ServerMessageGameMoveEvent(String message, Activity a) {
-        this.board = message;
+    public ServerMessageGameMoveEvent(String b, String o, Activity a) {
+        this.board = b;
+        this.ownsFields = o;
         this.activ = a;
     }
 }

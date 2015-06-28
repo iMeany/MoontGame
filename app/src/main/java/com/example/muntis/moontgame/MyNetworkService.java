@@ -94,9 +94,11 @@ public class MyNetworkService extends Service {
                 inStream = new BufferedReader(new InputStreamReader(myClientSocket.getInputStream()));
                 outStream = new PrintWriter(myClientSocket.getOutputStream(), true);
 
+                // just to not re-initialize them
                 boolean nickRetry = false;
                 String line = "";
-                String move = "";
+                String board = "";
+                String owns = "";
 
                 while(true) {
                     // process messages received from server
@@ -119,9 +121,9 @@ public class MyNetworkService extends Service {
 
                     // when move from other player is rec
                     } else if (line.startsWith("BOARD|")) {
-                        move = line.substring(6);
-
-                        EventBus.getDefault().post((new ServerMessageGameMoveEvent(move, parentActiv)));
+                        board = line.substring(6, 6+64);
+                        owns = line.substring(6+1+64);
+                        EventBus.getDefault().post((new ServerMessageGameMoveEvent(board, owns, parentActiv)));
 
                     // game on server started, go to game
                     } else if (line.matches("GAMESTARTED|.*?|"+nickname) || line.matches("GAMESTARTED|"+nickname+"|.*?") ) {
@@ -142,7 +144,7 @@ public class MyNetworkService extends Service {
                         EventBus.getDefault().post((new ActivityChangeEvent(otherNick)));
 
 
-                    // text message recieved from other player
+                    // text message received from other player
                     } else if (line.startsWith("MESSAGE")) {
                         // @todo implement game chat here if needed
 

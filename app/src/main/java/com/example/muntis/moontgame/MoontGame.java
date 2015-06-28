@@ -65,23 +65,23 @@ public class MoontGame {
         buttonBoard[5][6] = (Button) curActivity.findViewById(R.id.f7);
         buttonBoard[5][7] = (Button) curActivity.findViewById(R.id.f8);
 
-        buttonBoard[6][0] = (Button) curActivity.findViewById(R.id.h1);
-        buttonBoard[6][1] = (Button) curActivity.findViewById(R.id.h2);
-        buttonBoard[6][2] = (Button) curActivity.findViewById(R.id.h3);
-        buttonBoard[6][3] = (Button) curActivity.findViewById(R.id.h4);
-        buttonBoard[6][4] = (Button) curActivity.findViewById(R.id.h5);
-        buttonBoard[6][5] = (Button) curActivity.findViewById(R.id.h6);
-        buttonBoard[6][6] = (Button) curActivity.findViewById(R.id.h7);
-        buttonBoard[6][7] = (Button) curActivity.findViewById(R.id.h8);
+        buttonBoard[6][0] = (Button) curActivity.findViewById(R.id.g1);
+        buttonBoard[6][1] = (Button) curActivity.findViewById(R.id.g2);
+        buttonBoard[6][2] = (Button) curActivity.findViewById(R.id.g3);
+        buttonBoard[6][3] = (Button) curActivity.findViewById(R.id.g4);
+        buttonBoard[6][4] = (Button) curActivity.findViewById(R.id.g5);
+        buttonBoard[6][5] = (Button) curActivity.findViewById(R.id.g6);
+        buttonBoard[6][6] = (Button) curActivity.findViewById(R.id.g7);
+        buttonBoard[6][7] = (Button) curActivity.findViewById(R.id.g8);
 
-        buttonBoard[7][0] = (Button) curActivity.findViewById(R.id.g1);
-        buttonBoard[7][1] = (Button) curActivity.findViewById(R.id.g2);
-        buttonBoard[7][2] = (Button) curActivity.findViewById(R.id.g3);
-        buttonBoard[7][3] = (Button) curActivity.findViewById(R.id.g4);
-        buttonBoard[7][4] = (Button) curActivity.findViewById(R.id.g5);
-        buttonBoard[7][5] = (Button) curActivity.findViewById(R.id.g6);
-        buttonBoard[7][6] = (Button) curActivity.findViewById(R.id.g7);
-        buttonBoard[7][7] = (Button) curActivity.findViewById(R.id.g8);
+        buttonBoard[7][0] = (Button) curActivity.findViewById(R.id.h1);
+        buttonBoard[7][1] = (Button) curActivity.findViewById(R.id.h2);
+        buttonBoard[7][2] = (Button) curActivity.findViewById(R.id.h3);
+        buttonBoard[7][3] = (Button) curActivity.findViewById(R.id.h4);
+        buttonBoard[7][4] = (Button) curActivity.findViewById(R.id.h5);
+        buttonBoard[7][5] = (Button) curActivity.findViewById(R.id.h6);
+        buttonBoard[7][6] = (Button) curActivity.findViewById(R.id.h7);
+        buttonBoard[7][7] = (Button) curActivity.findViewById(R.id.h8);
         return buttonBoard;
     }
 
@@ -90,10 +90,8 @@ public class MoontGame {
         int x=0;
         int y=0;
         for (char c : boardInString.toCharArray()) {
-            btnBoard[x][y].setText(c);
+            btnBoard[x%8][y/8].setText(c);
             x++;
-            y += x % 8;
-            x = x % 8;
         }
 
 

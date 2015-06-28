@@ -19,7 +19,7 @@ import android.widget.Toast;
 import de.greenrobot.event.EventBus;
 import com.example.muntis.moontgame.MyNetworkService;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
     MyNetworkService mService;
     boolean mBound = false;
     Handler messageHandler = new Handler();
@@ -120,6 +120,8 @@ public class MainActivity extends Activity {
 
         EditText nick = (EditText) findViewById(R.id.nick);
         intent.putExtra("nick", nick.getText().toString());
+        intent.putExtra("other_nick", activEvent.otherNickname);
+
         startActivity(intent);
 
     }

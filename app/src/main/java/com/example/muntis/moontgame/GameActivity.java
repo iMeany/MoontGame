@@ -5,6 +5,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
@@ -21,13 +23,14 @@ import java.io.PrintWriter;
 import de.greenrobot.event.EventBus;
 
 
-public class GameActivity extends ActionBarActivity {
+public class GameActivity extends Activity {
     MyNetworkService mService;
     boolean mBound = false;
     Handler messageHandler = new Handler();
     Handler messageHandleraaa = new Handler();
     Handler messageHandlerb = new Handler();
     Intent myIntent;
+    String myNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,10 @@ public class GameActivity extends ActionBarActivity {
         setContentView(R.layout.activity_game);
         mService.parentActiv = this;
         myIntent = getIntent();
+        myNickname = myIntent.getStringExtra("nick");
+        String otherNick = myIntent.getStringExtra("other_nick");
+        TextView topTxt = (TextView) findViewById(R.id.topText);
+        topTxt.setText("Playing: "+ myNickname + "  vs  " + otherNick);
     }
 
     @Override
@@ -83,20 +90,11 @@ public class GameActivity extends ActionBarActivity {
     // this is called when gameButton is pressed
     public void onClick(View v) {
         final Button b = (Button) v;
-        final String nicknn = myIntent.getStringExtra("nick");
-        final String btnTxt = b.getText().toString();
-        int a = mService.getRandomNumber();
+        final String btnTxt = (String) b.getTag();
+        //int a = mService.getRandomNumber();
 
-        if (mBound) {
-            Runnable doDisplayError = new Runnable() {
-                public void run() {
-                    mService.sendMessage("MOVE|" + nicknn + "|" + btnTxt);
-                }
-            };
-            messageHandler.post(doDisplayError);
+        mService.sendMessage("MOVE|" + myNickname + "|" + btnTxt);
 
-
-        }
         //@todo probably disable buttons till opponents turn has come
     }
 
@@ -109,6 +107,7 @@ public class GameActivity extends ActionBarActivity {
                 TextView dd = (TextView) findViewById(R.id.debugTxt);
                 dd.setText(event.board);
                 char[] b = event.board.toCharArray();
+                char[] o = event.ownsFields.toCharArray();
 
                 buttonBoard[0][0] = (Button) findViewById(R.id.a1);
                 buttonBoard[0][1] = (Button) findViewById(R.id.a2);
@@ -164,29 +163,40 @@ public class GameActivity extends ActionBarActivity {
                 buttonBoard[5][6] = (Button) findViewById(R.id.f7);
                 buttonBoard[5][7] = (Button) findViewById(R.id.f8);
 
-                buttonBoard[6][0] = (Button) findViewById(R.id.h1);
-                buttonBoard[6][1] = (Button) findViewById(R.id.h2);
-                buttonBoard[6][2] = (Button) findViewById(R.id.h3);
-                buttonBoard[6][3] = (Button) findViewById(R.id.h4);
-                buttonBoard[6][4] = (Button) findViewById(R.id.h5);
-                buttonBoard[6][5] = (Button) findViewById(R.id.h6);
-                buttonBoard[6][6] = (Button) findViewById(R.id.h7);
-                buttonBoard[6][7] = (Button) findViewById(R.id.h8);
+                buttonBoard[6][0] = (Button) findViewById(R.id.g1);
+                buttonBoard[6][1] = (Button) findViewById(R.id.g2);
+                buttonBoard[6][2] = (Button) findViewById(R.id.g3);
+                buttonBoard[6][3] = (Button) findViewById(R.id.g4);
+                buttonBoard[6][4] = (Button) findViewById(R.id.g5);
+                buttonBoard[6][5] = (Button) findViewById(R.id.g6);
+                buttonBoard[6][6] = (Button) findViewById(R.id.g7);
+                buttonBoard[6][7] = (Button) findViewById(R.id.g8);
 
-                buttonBoard[7][0] = (Button) findViewById(R.id.g1);
-                buttonBoard[7][1] = (Button) findViewById(R.id.g2);
-                buttonBoard[7][2] = (Button) findViewById(R.id.g3);
-                buttonBoard[7][3] = (Button) findViewById(R.id.g4);
-                buttonBoard[7][4] = (Button) findViewById(R.id.g5);
-                buttonBoard[7][5] = (Button) findViewById(R.id.g6);
-                buttonBoard[7][6] = (Button) findViewById(R.id.g7);
-                buttonBoard[7][7] = (Button) findViewById(R.id.g8);
+                buttonBoard[7][0] = (Button) findViewById(R.id.h1);
+                buttonBoard[7][1] = (Button) findViewById(R.id.h2);
+                buttonBoard[7][2] = (Button) findViewById(R.id.h3);
+                buttonBoard[7][3] = (Button) findViewById(R.id.h4);
+                buttonBoard[7][4] = (Button) findViewById(R.id.h5);
+                buttonBoard[7][5] = (Button) findViewById(R.id.h6);
+                buttonBoard[7][6] = (Button) findViewById(R.id.h7);
+                buttonBoard[7][7] = (Button) findViewById(R.id.h8);
 
-                // setting board button values
-                for (int i=0; i<64; i++) {
-                    buttonBoard[i/8][i%8].setText(Character.toString(b[i]));
+
+                // setting board button values and colors
+                for (int i=0; i<8; i++) {
+                    for (int j=0;j<8; j++) {
+                        //set field value
+                        buttonBoard[i][j].setText(Character.toString(b[i * 8 + j]));
+                        //buttonBoard[i][j].getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
+
+                        //set field color
+                        if (b[i*8+j]=='1') { //for yourself @todo not 1 but player assigned nr
+                            buttonBoard[i][j].getBackground().setColorFilter(Color.rgb(52, 152, 219), PorterDuff.Mode.MULTIPLY);
+                        } else if (b[i*8+j]=='2') { // for enemy
+                            buttonBoard[i][j].getBackground().setColorFilter(Color.rgb(46, 204, 113), PorterDuff.Mode.MULTIPLY);
+                        }
+                    }
                 }
-
             }
 
         };
