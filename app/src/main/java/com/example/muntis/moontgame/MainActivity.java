@@ -31,6 +31,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mService.parentActiv = this;
+
+
+        EditText startNick = (EditText) findViewById(R.id.nick);
+        startNick.setText(android.os.Build.MODEL);
     }
 
     @Override

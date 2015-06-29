@@ -69,7 +69,7 @@
         android:id="@+id/connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Connect..."
+        android:text="@string/button_connect"
         android:onClick="onConnectClick"/>
 
     <TextView

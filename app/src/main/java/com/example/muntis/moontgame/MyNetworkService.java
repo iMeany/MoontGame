@@ -103,7 +103,9 @@ public class MyNetworkService extends Service {
                 String owns = "";
                 String f = "";
 
-                while(true) {
+                boolean gameRunning = true;
+
+                while(gameRunning) {
                     // process messages received from server
                     line = inStream.readLine();
 
@@ -135,7 +137,7 @@ public class MyNetworkService extends Service {
                         if (f.equals(nickname)) {
                             myMove = true;
                         }
-                        EventBus.getDefault().post((new ServerMessageGameMoveEvent(board, owns, parentActiv, myMove)));
+                        EventBus.getDefault().post((new ServerMessageReceivedBoard(board, owns, parentActiv, myMove)));
 
                     // game on server started, go to game
                     } else if (line.startsWith("GAMESTARTED|")) {
@@ -151,12 +153,28 @@ public class MyNetworkService extends Service {
                                 otherNick=mm.group(1);
                             }
                         }
-                        EventBus.getDefault().post((new ServerMessageEvent("OTHER: " + otherNick, parentActiv)));
+                        //toast about other players nickname
+                        // EventBus.getDefault().post((new ServerMessageEvent("OTHER: " + otherNick, parentActiv)));
+
                         // go to game activity
                         EventBus.getDefault().post((new ActivityChangeEvent(otherNick)));
 
 
                     // text message received from other player
+                    } else if (line.startsWith("GAMEOVER|")) {
+                        //get points and victor
+                        Pattern p = Pattern.compile("GAMEOVER\\|(.*?)\\|(.*?)\\|(.*?)\\|(.*?)\\|(.*?)$");
+                        Matcher mm = p.matcher(line);
+                        while(mm.find()) {
+                            EventBus.getDefault().post((new ServerMessageGameOver(mm.group(1), //p1 nick
+                                                                                mm.group(2),  // p1 score
+                                                                                mm.group(3),  // p2 nick
+                                                                                mm.group(4),  // p2 score
+                                                                                mm.group(5)   // winner nick
+                                                                        )));
+                        }
+                        gameRunning = false;
+
                     } else if (line.startsWith("MESSAGE")) {
                         // @todo implement game chat here if needed
 

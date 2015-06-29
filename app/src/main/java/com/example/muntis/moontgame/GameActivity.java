@@ -9,8 +9,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,21 +18,36 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.PrintWriter;
-
 import de.greenrobot.event.EventBus;
 
 
 public class GameActivity extends Activity {
     MyNetworkService mService;
     boolean myTurn = true;
+    boolean firstTurn = true;
     boolean mBound = false;
     Handler messageHandler = new Handler();
-    Handler messageHandleraaa = new Handler();
-    Handler messageHandlerb = new Handler();
     Intent myIntent;
     String myNickname;
+    String otherNickname;
     Button[][] buttonBoard = new Button[8][8];
+
+    // Defines callbacks for service binding, passed to bindService()
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            MyNetworkService.LocalBinder binder = (MyNetworkService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +56,9 @@ public class GameActivity extends Activity {
         mService.parentActiv = this;
         myIntent = getIntent();
         myNickname = myIntent.getStringExtra("nick");
-        String otherNick = myIntent.getStringExtra("other_nick");
-        TextView topTxt = (TextView) findViewById(R.id.topText);
-        topTxt.setText("Playing: "+ myNickname + "  vs  " + otherNick);
+        otherNickname = myIntent.getStringExtra("other_nick");
+        TextView dd = (TextView) findViewById(R.id.debugTxt);
+        dd.setText("");
 
         buttonBoard[0][0] = (Button) findViewById(R.id.a1);
         buttonBoard[0][1] = (Button) findViewById(R.id.a2);
@@ -178,13 +193,13 @@ public class GameActivity extends Activity {
     }
 
     // this is called when receives message from server
-    public void onEvent(final ServerMessageGameMoveEvent event) {
-        final Activity ca = this;
+    public void onEvent(final ServerMessageReceivedBoard event) {
 
         Runnable doDisplayError = new Runnable() {
             public void run() {
                 TextView dd = (TextView) findViewById(R.id.debugTxt);
-                dd.setText(event.board+event.myMove.toString());
+                //dd.setText(event.board+event.myMove.toString());
+
                 char[] b = event.board.toCharArray();
                 char[] o = event.ownsFields.toCharArray();
 
@@ -200,32 +215,37 @@ public class GameActivity extends Activity {
                         } else if (o[i*8+j]=='2') { // for enemy
                             buttonBoard[i][j].getBackground().setColorFilter(Color.rgb(46, 204, 113), PorterDuff.Mode.MULTIPLY);
                         }
-
-                       myTurn=event.myMove;
                     }
+
                 }
+                // notify about first turn
+                myTurn=event.myMove;
+                TextView topTxt = (TextView) findViewById(R.id.topText);
+                if (firstTurn && myTurn) {
+                    Toast.makeText(getApplicationContext(), "You have first turn!", Toast.LENGTH_LONG).show();
+                    topTxt.setText(Html.fromHtml("<font color=#3498DB>" + myNickname + "</font>  vs  <font color=#2ECC71>" + otherNickname + "</font>"));
+                } else {
+                    topTxt.setText(Html.fromHtml("<font color=#2ECC71>" + myNickname + "</font>  vs  <font color=#3498DB>" + otherNickname + "</font>"));
+                }
+
+                firstTurn=false;
             }
 
         };
         messageHandler.post(doDisplayError);
     }
 
+    // this is called when receives message from server
+    public void onEvent(final ServerMessageGameOver e) {
 
+        Runnable doDisplayError = new Runnable() {
+            public void run() {
+                TextView dd = (TextView) findViewById(R.id.debugTxt);
+                dd.setText("Game over! Final score: \n" + e.player1 + " : " + e.player1Score + "\n" + e.player2 + " : " + e.player2Score);
+                dd.append("\nThe winner is " + e.winner + "!");
+            }
 
-    // Defines callbacks for service binding, passed to bindService()
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            MyNetworkService.LocalBinder binder = (MyNetworkService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
+        };
+        messageHandler.post(doDisplayError);
+    }
 }
