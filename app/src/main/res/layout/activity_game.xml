@@ -7,15 +7,11 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:orientation="vertical"
-    tools:context="com.example.muntis.moontgame.GameActivity"
-    android:transitionGroup="false">
+    tools:context="com.example.muntis.moontgame.GameActivity">
 
-    <TextView
-        android:text="@string/nick_vs_nick"
-        android:layout_width="wrap_content"
+    <TextView android:text="@string/default_nickname_text" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topText"
-        />
+        android:id="@+id/topText" />
 
 
     <LinearLayout

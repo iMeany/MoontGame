@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.greenrobot.event.EventBus;
 
@@ -32,7 +34,7 @@ public class MyNetworkService extends Service {
 
     Runnable connectWrite=null;
     public String serverAdr;
-    public String nickname;
+    public static String nickname;
     public Integer serverPrt;
     public static Activity parentActiv;
 
@@ -99,6 +101,7 @@ public class MyNetworkService extends Service {
                 String line = "";
                 String board = "";
                 String owns = "";
+                String f = "";
 
                 while(true) {
                     // process messages received from server
@@ -118,28 +121,37 @@ public class MyNetworkService extends Service {
                     } else if (line.startsWith("NAMEACCEPTED|"+nickname)) {
                         EventBus.getDefault().post(new ServerMessageEvent("ACCEPTED_WAIT", parentActiv));
 
-
-                    // when move from other player is rec
+                    // when move from other player is received
                     } else if (line.startsWith("BOARD|")) {
-                        board = line.substring(6, 6+64);
-                        owns = line.substring(6+1+64);
-                        EventBus.getDefault().post((new ServerMessageGameMoveEvent(board, owns, parentActiv)));
+                        Pattern p = Pattern.compile("BOARD|\\|(.*?)\\|(.*?)\\|(.*?)$");
+                        Matcher mm = p.matcher(line);
+
+                        while(mm.find()) {
+                            board = mm.group(1);
+                            owns = mm.group(2);
+                            f =  mm.group(3);
+                        }
+                        boolean myMove=false;
+                        if (f.equals(nickname)) {
+                            myMove = true;
+                        }
+                        EventBus.getDefault().post((new ServerMessageGameMoveEvent(board, owns, parentActiv, myMove)));
 
                     // game on server started, go to game
-                    } else if (line.matches("GAMESTARTED|.*?|"+nickname) || line.matches("GAMESTARTED|"+nickname+"|.*?") ) {
+                    } else if (line.startsWith("GAMESTARTED|")) {
 
-                        // get other nickname
-                        String otherNick = "";
-                        if (line.matches("GAMESTARTED|.*?|" + nickname)) {
-                            // its in first part
-                            otherNick = line.substring(12, line.length()-nickname.length()-1);
-                            EventBus.getDefault().post((new ServerMessageEvent(otherNick, parentActiv)));
-                        } else {
-                            // its in second part
-                            otherNick = line.substring(12+nickname.length()+1);
-                            EventBus.getDefault().post((new ServerMessageEvent("OTHER: " + otherNick, parentActiv)));
+                        //get other nickname
+                        Pattern p = Pattern.compile("GAMESTARTED\\|(.*?)\\|(.*?)$");
+                        Matcher mm = p.matcher(line);
+                        String otherNick = "other_nick";
+                        while(mm.find()) {
+                            if (mm.group(1).equals(nickname)) {
+                                otherNick=mm.group(2);
+                            } else {
+                                otherNick=mm.group(1);
+                            }
                         }
-
+                        EventBus.getDefault().post((new ServerMessageEvent("OTHER: " + otherNick, parentActiv)));
                         // go to game activity
                         EventBus.getDefault().post((new ActivityChangeEvent(otherNick)));
 
@@ -169,7 +181,8 @@ public class MyNetworkService extends Service {
         // start parallel network stream writing thread
         Runnable connectWrite = new connectSocketWrite();
         sendMsg = msg; // @todo ??????
-        new Thread(connectWrite).start();
+        outStream.println(sendMsg);
+        //new Thread(connectWrite).start();
         return null;
     }
 
