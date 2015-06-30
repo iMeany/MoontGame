@@ -32,6 +32,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         mService.parentActiv = this;
 
+        TextView response = (TextView) findViewById(R.id.response);
+        response.setText("");
 
         EditText startNick = (EditText) findViewById(R.id.nick);
         startNick.setText(android.os.Build.MODEL);
@@ -126,6 +128,14 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra("nick", nick.getText().toString());
         intent.putExtra("other_nick", activEvent.otherNickname);
 
+        Runnable doDisplayError = new Runnable() {
+            public void run() {
+                TextView response = (TextView) findViewById(R.id.response);
+                response.setText("");
+            }
+
+        };
+        messageHandler.post(doDisplayError);
         startActivity(intent);
 
     }

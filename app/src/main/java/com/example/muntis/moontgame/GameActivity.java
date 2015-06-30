@@ -243,6 +243,8 @@ public class GameActivity extends Activity {
                 TextView dd = (TextView) findViewById(R.id.debugTxt);
                 dd.setText("Game over! Final score: \n" + e.player1 + " : " + e.player1Score + "\n" + e.player2 + " : " + e.player2Score);
                 dd.append("\nThe winner is " + e.winner + "!");
+                firstTurn=true; // for next game
+                myTurn=true;
             }
 
         };

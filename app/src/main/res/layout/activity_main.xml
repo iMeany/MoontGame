@@ -50,7 +50,7 @@
             android:id="@+id/porttxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Port      "
+            android:text="Port   "
             android:textAlignment="center"/>
     </LinearLayout>
     <EditText
@@ -76,5 +76,6 @@
         android:id="@+id/response"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="debug.." />
+        android:text=""
+        android:textSize="20sp"/>
 </LinearLayout>
